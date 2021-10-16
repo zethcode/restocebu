@@ -1,0 +1,34 @@
+[
+    {
+        "id": "10.315628750939199123.88559764527679",
+        "lat": 10.315628750939199,
+        "lng": 123.88559764527679,
+        "name": "Zeth Steakhouse",
+        "type": "Casual Dining",
+        "address": "Green Valley Subdivision, Acacia St, Capitol, Cebu City, 6000",
+        "description": "Welcome to the Home of Cebu's favorite steaks. We are open for delivery, dine-in and takeout. A no frills steakhouse good for family and friends. If you prefer to stay safe in your homes, we deliver to Cebu City, Mandaue, Consolacion, Liloan, Mactan, Talisay & Minglanilla",
+        "contact": "(032) 254 9946",
+        "specialtyFood": "Steak",
+        "avgCustomer": 20,
+        "timeOpen": "10:00 AM",
+        "timeClose": "9:00 PM",
+        "daysOpen": "Monday - Sunday",
+        "dateCreated": "October 16, 2021 7:30 pm"
+    },
+    {
+        "id": "10.3091052218798123.89378234356502",
+        "lat": 10.3091052218798,
+        "lng": 123.89378234356502,
+        "name": "Cafe France",
+        "type": "Cafe",
+        "address": "Fuente Osmeña Cir, Cebu City, 6000 Cebu",
+        "description": "An elegant cafe situated at the center of Cebu. Dine with us to get cozy and productive. We provide free electric outlets for your devices to charge and a fast internet connection.",
+        "contact": "(012) 123 4567",
+        "specialtyFood": "Coffee Beverages",
+        "avgCustomer": 56,
+        "timeOpen": "7:00 AM",
+        "timeClose": "11:00 PM",
+        "daysOpen": "Monday - Friday",
+        "dateCreated": "October 16, 2021 7:30 pm"
+    }
+]
