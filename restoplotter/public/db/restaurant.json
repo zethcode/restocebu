@@ -7,13 +7,57 @@
         "type": "Casual Dining",
         "address": "Green Valley Subdivision, Acacia St, Capitol, Cebu City, 6000",
         "description": "Welcome to the Home of Cebu's favorite steaks. We are open for delivery, dine-in and takeout. A no frills steakhouse good for family and friends. If you prefer to stay safe in your homes, we deliver to Cebu City, Mandaue, Consolacion, Liloan, Mactan, Talisay & Minglanilla",
-        "contact": "(032) 254 9946",
+        "phone": "(032) 254 9946",
         "specialtyFood": "Steak",
         "avgCustomer": 20,
         "timeOpen": "10:00 AM",
         "timeClose": "9:00 PM",
         "daysOpen": "Monday - Sunday",
-        "dateCreated": "October 16, 2021 7:30 pm"
+        "dateCreated": "October 16, 2021 7:30 pm",
+        "reviews": [
+            {
+                "id": "review1",
+                "reviewerName": "Arckie Jadulco",
+                "comment": "Their steak is the most juicy, tender, and flavorful steak that I have every tried!",
+                "rating": 5,
+                "dateCreated": "October 11, 2021"
+            },
+            {
+                "id": "review2",
+                "reviewerName": "Anonymous",
+                "comment": "The menu has fewer options than when we  last visited. We were definitely excited for the pasta but it’s been phased out, for now. Other than that, steaks are the best. And ambience is perfect for friends and family.",
+                "rating": 5,
+                "dateCreated": "September 16, 2021"
+            },
+            {
+                "id": "review3",
+                "reviewerName": "Francel Ocampo",
+                "comment": "I'm no steak expert but so far this place might be good because it's a full house even at weekdays. We ordered ostrich pepper steak, Salisbury steak, and Acacia Patty Melt. All are so good especially the ostrich pepper steak. Will visit again on a daytime for another menu.",
+                "rating": 5,
+                "dateCreated": "September 12, 2021"
+            },
+            {
+                "id": "review4",
+                "reviewerName": "Louise Nino",
+                "comment": "Steak is not a cheap kind of food but I can't stop myself from going back to this resto. I always get their black pepper steak (pinakabarato) and mashed potato. I enjoy it with rice still. Hahaha. This is a great alfresco dining area. Perfect for dates both with family and your gf/bf. Downside: the transportation (it is good for those who have their own vehicle; if not possible, take a taxi or grab)",
+                "rating": 4,
+                "dateCreated": "August 28, 2021"
+            },
+            {
+                "id": "review5",
+                "reviewerName": "Tyler Montenegro",
+                "comment": "This place is really good for intimate gathering with family or loved ones. The entire ambiance of the place is nice and romantic. Their food is moderately expensive tho but worth the price.",
+                "rating": 4,
+                "dateCreated": "July 26, 2021"
+            },
+            {
+                "id": "review6",
+                "reviewerName": "Jace Joaquin",
+                "comment": "The steak is amazing!!!",
+                "rating": 3,
+                "dateCreated": "December 28, 2020"
+            }
+        ]
     },
     {
         "id": "10.3091052218798123.89378234356502",
@@ -22,8 +66,8 @@
         "name": "Cafe France",
         "type": "Cafe",
         "address": "Fuente Osmeña Cir, Cebu City, 6000 Cebu",
-        "description": "An elegant cafe situated at the center of Cebu. Dine with us to get cozy and productive. We provide free electric outlets for your devices to charge and a fast internet connection.",
-        "contact": "(012) 123 4567",
+        "description": "An elegant cafe situated at the center of Cebu. Dine with us to get cozy and productive. We provide free electric outlets for your devices to charge and a fast internet connection here!",
+        "phone": "(012) 123 4567",
         "specialtyFood": "Coffee Beverages",
         "avgCustomer": 56,
         "timeOpen": "7:00 AM",

@@ -1,11 +1,22 @@
 import { makeStyles } from '@material-ui/core/styles';
 
-export default makeStyles(() => ({
+export default makeStyles((theme) => ({
     paper: {
         padding: '10px', display: 'flex', flexDirection: 'column', justifyContent: 'center', width: '100px',
     },
     mapContainer: {
         height: '85vh', width: '100%'
+    },
+    sidebar: {
+        backgroundColor: 'whitesmoke',
+        color: "black"
+    },
+    sidebarTitle: {
+        backgroundColor: 'rgb(1, 1, 1, 0.9)',
+        padding: '8px',
+        color: "#fff"
+    },
+    checkbox: {
     },
     markerContainer: {
         position: 'absolute', transform: 'translate(-50%, -50%)', zIndex: 1, '&:hover': { zIndex: 2 },
@@ -29,6 +40,8 @@ export default makeStyles(() => ({
         color: 'rgb(255, 255, 255, 1)',
     },
     drawBtn: {
+        paddingLeft: "15px",
+        paddingRight: "15px",
         position: 'absolute',
         textTransform: 'none',
         bottom: '2rem',
@@ -45,6 +58,10 @@ export default makeStyles(() => ({
     },
     dialogTitle: {
         backgroundColor: 'rgb(222, 170, 29, 1)',
+        paddingTop: '16px',
+        paddingBottom: '16px',
+        paddingLeft: '22px',
+        paddingRight: '22px'
     },
     dialogContent: {
         backgroundColor: 'rgb(255, 255, 255, 0.9)',
@@ -62,5 +79,15 @@ export default makeStyles(() => ({
         },
         color: "white",
         borderRadius: "30px"
+    },
+    icon: {
+        marginBottom: -6
+    },
+    review: {
+        marginTop: "15px",
+        marginBottom: "10px"
+    },
+    reviewText: {
+        fontSize: "13px"
     }
 }));

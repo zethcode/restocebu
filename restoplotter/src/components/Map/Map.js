@@ -1,9 +1,11 @@
 import { useState, useEffect, useCallback, forwardRef, useRef } from 'react';
 import { GoogleMap, useLoadScript, Marker, InfoWindow } from '@react-google-maps/api';
-import { Button, Fab, Typography, useMediaQuery, Paper, Snackbar, Slide, Dialog, DialogTitle, DialogContent, DialogContentText, DialogActions, TextField, FormControl, InputLabel, Select, MenuItem, Grid } from '@material-ui/core';
+import { Button, Fab, Typography, Snackbar, Slide, Dialog, DialogTitle, DialogContent, DialogContentText, DialogActions, TextField, FormControl, InputLabel, Select, MenuItem, Grid, FormGroup, FormControlLabel, FormHelperText, Checkbox, Divider } from '@material-ui/core';
 import currentLocationPin from './../../assets/your_location_pin.png';
 import MyLocationIcon from '@material-ui/icons/MyLocation';
 import LocationOnIcon from '@material-ui/icons/LocationOn';
+import AccessTimeIcon from '@material-ui/icons/AccessTime';
+import RateReviewIcon from '@material-ui/icons/RateReview';
 import restoPin from './../../assets/restaurant_pin.png';
 import { getRestaurants } from './../../api/index';
 import { useForm } from 'react-hook-form';
@@ -69,16 +71,46 @@ const Map = () => {
     const { register, handleSubmit, reset, watch, formState: { errors } } = useForm({});
     const [dialogOpen, setDialogOpen] = useState(false);
     const [placeInfoOpen, setPlaceInfoOpen] = useState(false);
+    const [restoTypeFilter, setRestoTypeFilter] = useState({
+        fineDining: true,
+        casualDining: true,
+        fastFood: true,
+        cafe: true,
+        unliFood: true,
+        others: true,
+    });
+    const { fineDining, casualDining, fastFood, cafe, unliFood, others } = restoTypeFilter;
     const daysOpenWatch = watch("daysOpen");
 
     useEffect(() => {
+        let markersPlaceholder = [];
+        var restoTypeKeys = Object.keys(restoTypeFilter);
+
+        var filteredTypes = restoTypeKeys.filter(function (key) {
+            return restoTypeFilter[key]
+        });
+
+        var indexOf = (arr, q) => arr.findIndex(item => q.toLocaleLowerCase().replace(/\s/g, '') === item.toLowerCase());
+
         const fetchRestaurantData = async () => {
-            setRestoMarkers(await getRestaurants())
+            markersPlaceholder = await getRestaurants();
+
+            var filteredMarkers = markersPlaceholder.filter(function (resto) {
+                return indexOf(filteredTypes, resto.type) > -1;
+            });
+
+            setRestoMarkers(filteredMarkers);
         }
 
         fetchRestaurantData();
+    }, [restoTypeFilter])
 
-    }, [])
+    const handleFiltersChange = (event) => {
+        setRestoTypeFilter({
+            ...restoTypeFilter,
+            [event.target.name]: event.target.checked,
+        });
+    };
 
     const handleClose = () => {
         setSnackbarOpen(false);
@@ -187,16 +219,70 @@ const Map = () => {
                 },
             }}
         >
-            <DialogTitle className={classes.dialogTitle}>
+            <div className={classes.dialogTitle}>
                 <Typography variant="h4" style={{ color: "white" }}>{restoDetails.name}</Typography>
                 <Typography variant="subtitle1" style={{ color: "white" }}>{restoDetails.type}</Typography>
-            </DialogTitle>
+            </div>
             <DialogContent className={classes.dialogContent}>
-                <Typography variant="subtitle1"><LocationOnIcon />{restoDetails.address}</Typography>
                 <br />
-
+                <Typography variant="subtitle1"><LocationOnIcon className={classes.icon} /> {restoDetails.address}</Typography>
+                <br />
                 <DialogContentText id="alert-dialog-slide-description">{restoDetails.description}</DialogContentText>
-
+                <br />
+                <Grid container spacing={1} align="center">
+                    <Grid item xs={4}>
+                        <Typography variant="subtitle2"><b>Food Specialty:</b> {restoDetails.specialtyFood}</Typography>
+                    </Grid>
+                    <Grid item xs={4}>
+                        <Typography variant="subtitle2"><b>Phone:</b> {restoDetails.phone}</Typography>
+                    </Grid>
+                    <Grid item xs={4}>
+                        <Typography variant="subtitle2"><b>Customers/Day:</b> {restoDetails.avgCustomer}</Typography>
+                    </Grid>
+                </Grid>
+                <br />
+                <Grid container spacing={2} align="center">
+                    <Grid item xs={6}>
+                        <Typography variant="subtitle2"><b>Days Open:</b> {restoDetails.daysOpen}</Typography>
+                    </Grid>
+                    <Grid item xs={6}>
+                        <Typography variant="subtitle2"><AccessTimeIcon className={classes.icon} /> {restoDetails.timeOpen} - {restoDetails.timeClose}</Typography>
+                    </Grid>
+                </Grid>
+                <br /><hr />
+                <Grid container>
+                    <Grid item>
+                        <Typography variant="subtitle1"><RateReviewIcon className={classes.icon} /> Reviews</Typography>
+                    </Grid>
+                    {restoDetails.reviews ? restoDetails.reviews.map((review) => (
+                        <Grid container key={review.id} className={classes.review}>
+                            <Grid item xs={12}>
+                                <Typography variant="subtitle2">{review.reviewerName}</Typography>
+                            </Grid>
+                            <Grid item xs={12}>
+                                <Typography className={classes.reviewText}>
+                                    <b>Rating:</b> {review.rating}/5
+                                </Typography>
+                            </Grid>
+                            <Grid item xs={12}>
+                                <Typography className={classes.reviewText}>{review.comment}</Typography>
+                            </Grid>
+                            <Grid item xs={12}>
+                                <Typography className={classes.reviewText}>
+                                    {review.dateCreated}
+                                </Typography>
+                            </Grid>
+                        </Grid>
+                    ))
+                        :
+                        <Grid container>
+                            <Grid item xs={12}>
+                                <Typography className={classes.reviewText}>No reviews</Typography>
+                            </Grid>
+                        </Grid>
+                    }
+                </Grid>
+                <hr />
             </DialogContent>
             <DialogActions className={classes.dialogActions}>
                 <Button className={classes.dialogButtons} onClick={handlePlaceInfoClose}>Directions</Button>
@@ -234,55 +320,57 @@ const Map = () => {
 
     return (
         <div className={classes.mapContainer}>
-            <GoogleMap
-                mapContainerStyle={mapContainerStyle}
-                zoom={14}
-                center={cebuCoordinates}
-                options={options}
-                onClick={drawMode && onMapClick}
-                onLoad={onMapLoad}
-            >
-                <Snackbar
-                    ContentProps={{
-                        classes: {
-                            root: classes.snackbar
-                        }
-                    }}
-                    open={snackbarOpen}
-                    anchorOrigin={{
-                        vertical: "top",
-                        horizontal: "right"
-                    }}
-                    onClose={handleClose}
-                    TransitionComponent={TransitionDown}
-                    message="Add restaurants by clicking anywhere on the map."
-                    key={TransitionDown.name}
-                />
-                <GetLocation panToLocation={panToLocation} />
-                {restoMarkers.map((marker) => {
-                    return (<div key={marker.id}>
-                        <Marker
-                            onLoad={onMarkerLoad}
-                            position={{ lat: marker.lat, lng: marker.lng }}
-                            icon={{
-                                url: restoPin,
-                                scaledSize: new window.google.maps.Size(30, 30),
-                                origin: new window.google.maps.Point(0, 0),
-                                labelOrigin: new window.google.maps.Point(15, -10)
+            <Grid container>
+                <Grid item xs={10}>
+                    <GoogleMap
+                        mapContainerStyle={mapContainerStyle}
+                        zoom={14}
+                        center={cebuCoordinates}
+                        options={options}
+                        onClick={drawMode && onMapClick}
+                        onLoad={onMapLoad}
+                    >
+                        <Snackbar
+                            ContentProps={{
+                                classes: {
+                                    root: classes.snackbar
+                                }
                             }}
-                            label={{
-                                text: marker.name,
-                                fontSize: "15px",
-                                fontWeight: "bold",
-                                color: "#000",
+                            open={snackbarOpen}
+                            anchorOrigin={{
+                                vertical: "top",
+                                horizontal: "right"
                             }}
-                            onClick={() => { setPlaceInfoOpen(true); setSelected(marker); }}
-                        >
-                        </Marker>
-                    </div>)
-                })}
+                            onClose={handleClose}
+                            TransitionComponent={TransitionDown}
+                            message="Add a restaurant by clicking the location on the map first."
+                            key={TransitionDown.name}
+                        />
+                        <GetLocation panToLocation={panToLocation} />
+                        {restoMarkers.map((marker) => {
+                            return (<div key={marker.id}>
+                                <Marker
+                                    onLoad={onMarkerLoad}
+                                    position={{ lat: marker.lat, lng: marker.lng }}
+                                    icon={{
+                                        url: restoPin,
+                                        scaledSize: new window.google.maps.Size(30, 30),
+                                        origin: new window.google.maps.Point(0, 0),
+                                        labelOrigin: new window.google.maps.Point(15, -10)
+                                    }}
+                                    label={{
+                                        text: marker.name,
+                                        fontSize: "15px",
+                                        fontWeight: "bold",
+                                        color: "#000",
+                                    }}
+                                    onClick={() => { setPlaceInfoOpen(true); setSelected(marker); }}
+                                >
+                                </Marker>
+                            </div>)
+                        })}
 
-                {/* {selected &&
+                        {/* {selected &&
                     (<InfoWindow
                         position={{ lat: selected.lat, lng: selected.lng }}
                         onCloseClick={() => { setSelected(null) }}
@@ -294,194 +382,268 @@ const Map = () => {
                         </div>
                     </InfoWindow>)} */}
 
-                {currentLocation &&
-                    <Marker
-                        onLoad={onMarkerLoad}
-                        position={{ lat: parseFloat(currentLocation.lat), lng: parseFloat(currentLocation.lng) }}
-                        icon={{
-                            url: currentLocationPin,
-                            scaledSize: new window.google.maps.Size(30, 30),
-                            origin: new window.google.maps.Point(0, 0),
-                            anchor: new window.google.maps.Point(15, 15)
-                        }}
-                        onClick={() => {
-                            setSelected(currentLocation)
-                        }}
-                    />
-                }
+                        {currentLocation &&
+                            <Marker
+                                onLoad={onMarkerLoad}
+                                position={{ lat: parseFloat(currentLocation.lat), lng: parseFloat(currentLocation.lng) }}
+                                icon={{
+                                    url: currentLocationPin,
+                                    scaledSize: new window.google.maps.Size(30, 30),
+                                    origin: new window.google.maps.Point(0, 0),
+                                    anchor: new window.google.maps.Point(15, 15),
+                                    labelOrigin: new window.google.maps.Point(15, -10)
+                                }}
+                                label={{
+                                    text: currentLocation.name ? currentLocation.name : "",
+                                    fontSize: "14px",
+                                    fontWeight: "bold",
+                                    color: "#000",
+                                }}
+                                onClick={() => {
+                                    setSelected(currentLocation)
+                                }}
+                            />
+                        }
 
-                <Button className={classes.drawBtn} size="small"
-                    onClick={() => toggleDrawMode()}
-                >
-                    {drawMode ?
-                        <Typography variant="subtitle1">Done</Typography>
-                        :
-                        <Typography variant="subtitle1">
-                            Add Restaurants
-                        </Typography>
+                        <Button className={classes.drawBtn} size="small"
+                            onClick={() => toggleDrawMode()}
+                        >
+                            {drawMode ?
+                                <Typography variant="subtitle1">Done</Typography>
+                                :
+                                <Typography variant="subtitle1">
+                                    Add Restaurants
+                                </Typography>
 
-                    }
-                </Button>
+                            }
+                        </Button>
 
-                <Dialog open={dialogOpen} onClose={handleDialogClose}>
-                    <DialogTitle>Add Restaurant</DialogTitle>
-                    <DialogContent>
-                        <DialogContentText>
-                            NOTE: No servers are currently set up for this app. This restaurant data will not be saved on your next visit.
-                        </DialogContentText> <br />
-                        <form onSubmit={handleSubmit(handleSaveRestaurant)}>
-                            <Grid container>
-                                <TextField
-                                    autoFocus
-                                    margin="dense"
-                                    id="resto-name"
-                                    name="restoName"
-                                    label="Restaurant Name"
-                                    variant="filled"
-                                    fullWidth
-                                    required
-                                    {...register("restoName")}
-                                />
-                                <FormControl fullWidth margin="dense">
-                                    <InputLabel id="resto-type-label" required>Restaurant Type</InputLabel>
-                                    <Select
-                                        labelId="resto-type-label"
-                                        id="resto-type-select"
-                                        name="restoType"
-                                        placeholder="Select Type..."
-                                        label="Restaurant Type"
-                                        defaultValue="Others"
-                                        required
-                                        {...register("restoType")}
-                                    >
-                                        <MenuItem value="Fine Dining">Fine Dining</MenuItem>
-                                        <MenuItem value="Casual Dining">Casual Dining</MenuItem>
-                                        <MenuItem value="Eat All You Can">Eat All You Can</MenuItem>
-                                        <MenuItem value="Fast Food">Fast Food</MenuItem>
-                                        <MenuItem value="Cafe">Cafe</MenuItem>
-                                        <MenuItem value="Others">Others</MenuItem>
-                                    </Select>
-                                </FormControl>
-                                <TextField
-                                    margin="dense"
-                                    id="resto-description"
-                                    name="restoDesc"
-                                    label="Short Description"
-                                    placeholder="e.g. Calm environment, get productive while dining..."
-                                    variant="filled"
-                                    fullWidth
-                                    required
-                                    {...register("description")}
-                                />
-                                <Grid container spacing={2}>
-                                    <Grid item xs={6} md={6}>
+                        <Dialog open={dialogOpen} onClose={handleDialogClose}>
+                            <DialogTitle>Add Restaurant</DialogTitle>
+                            <DialogContent>
+                                <DialogContentText>
+                                    NOTE: No servers are currently set up for this app. This restaurant data will not be saved on your next visit.
+                                </DialogContentText> <br />
+                                <form onSubmit={handleSubmit(handleSaveRestaurant)}>
+                                    <Grid container>
                                         <TextField
+                                            autoFocus
                                             margin="dense"
-                                            id="customer-visits"
-                                            name="customerVisits"
-                                            label="Average Customers Per Day"
-                                            variant="filled"
-                                            type="number"
-                                            fullWidth
-                                            required
-                                            {...register("avgCustomer")}
-                                        />
-                                    </Grid>
-                                    <Grid item xs={6} md={6}>
-                                        <TextField
-                                            margin="dense"
-                                            id="specialty-food"
-                                            name="specialtyFood"
-                                            label="Specialty Food"
-                                            placeholder="e.g. Steak"
+                                            id="resto-name"
+                                            name="restoName"
+                                            label="Restaurant Name"
                                             variant="filled"
                                             fullWidth
                                             required
-                                            {...register("specialtyFood")}
+                                            {...register("restoName")}
                                         />
-                                    </Grid>
-                                </Grid>
-                                <Grid container spacing={2}>
-                                    <Grid item xs={6} md={6}>
+                                        <FormControl fullWidth margin="dense">
+                                            <InputLabel id="resto-type-label" required>Restaurant Type</InputLabel>
+                                            <Select
+                                                labelId="resto-type-label"
+                                                id="resto-type-select"
+                                                name="restoType"
+                                                placeholder="Select Type..."
+                                                label="Restaurant Type"
+                                                defaultValue="Others"
+                                                required
+                                                {...register("restoType")}
+                                            >
+                                                <MenuItem value="Fine Dining">Fine Dining</MenuItem>
+                                                <MenuItem value="Casual Dining">Casual Dining</MenuItem>
+                                                <MenuItem value="Unlimited Food">Unlimited Food</MenuItem>
+                                                <MenuItem value="Fast Food">Fast Food</MenuItem>
+                                                <MenuItem value="Cafe">Cafe</MenuItem>
+                                                <MenuItem value="Others">Others</MenuItem>
+                                            </Select>
+                                        </FormControl>
                                         <TextField
-                                            InputLabelProps={{
-                                                shrink: true,
-                                            }}
                                             margin="dense"
-                                            id="time-open"
-                                            name="timeOpen"
-                                            label="Time Open"
+                                            id="resto-description"
+                                            name="restoDesc"
+                                            label="Short Description"
+                                            placeholder="e.g. Calm environment, get productive while dining..."
                                             variant="filled"
-                                            type="time"
                                             fullWidth
                                             required
-                                            {...register("timeOpen")}
+                                            {...register("description")}
                                         />
+                                        <Grid container spacing={2}>
+                                            <Grid item xs={6} md={6}>
+                                                <TextField
+                                                    margin="dense"
+                                                    id="customer-visits"
+                                                    name="customerVisits"
+                                                    label="Average Customers Per Day"
+                                                    variant="filled"
+                                                    type="number"
+                                                    fullWidth
+                                                    required
+                                                    {...register("avgCustomer")}
+                                                />
+                                            </Grid>
+                                            <Grid item xs={6} md={6}>
+                                                <TextField
+                                                    margin="dense"
+                                                    id="specialty-food"
+                                                    name="specialtyFood"
+                                                    label="Specialty Food"
+                                                    placeholder="e.g. Steak"
+                                                    variant="filled"
+                                                    fullWidth
+                                                    required
+                                                    {...register("specialtyFood")}
+                                                />
+                                            </Grid>
+                                        </Grid>
+                                        <Grid container spacing={2}>
+                                            <Grid item xs={6} md={6}>
+                                                <TextField
+                                                    InputLabelProps={{
+                                                        shrink: true,
+                                                    }}
+                                                    margin="dense"
+                                                    id="time-open"
+                                                    name="timeOpen"
+                                                    label="Time Open"
+                                                    variant="filled"
+                                                    type="time"
+                                                    fullWidth
+                                                    required
+                                                    {...register("timeOpen")}
+                                                />
+                                            </Grid>
+                                            <Grid item xs={6} md={6}>
+                                                <TextField
+                                                    InputLabelProps={{
+                                                        shrink: true,
+                                                    }}
+                                                    margin="dense"
+                                                    id="time-close"
+                                                    name="timeClose"
+                                                    label="Time Close"
+                                                    variant="filled"
+                                                    type="time"
+                                                    fullWidth
+                                                    required
+                                                    {...register("timeClose")}
+                                                />
+                                            </Grid>
+                                        </Grid>
+                                        <FormControl fullWidth margin="dense">
+                                            <InputLabel id="days-open-label" required>Days Open</InputLabel>
+                                            <Select
+                                                labelId="days-open-label"
+                                                id="days-open-select"
+                                                name="daysOpen"
+                                                placeholder="Select Days..."
+                                                label="Days Open"
+                                                defaultValue="Others"
+                                                required
+                                                {...register("daysOpen")}
+                                            >
+                                                <MenuItem value="Monday - Sunday">Monday - Sunday</MenuItem>
+                                                <MenuItem value="Monday - Friday">Monday - Friday</MenuItem>
+                                                <MenuItem value="Friday - Sunday">Friday - Sunday</MenuItem>
+                                                <MenuItem value="Saturday - Sunday">Saturday - Sunday</MenuItem>
+                                                <MenuItem value="Others">Others</MenuItem>
+                                            </Select>
+                                        </FormControl>
+                                        {daysOpenWatch === "Others" &&
+                                            <TextField
+                                                margin="dense"
+                                                id="other-days-open"
+                                                name="otherDaysOpen"
+                                                label="Please specify the days"
+                                                variant="filled"
+                                                type="text"
+                                                fullWidth
+                                                required
+                                                {...register("otherDaysOpen")}
+                                            />
+                                        }
+                                        <Grid container justifyContent="flex-end" alignItems="flex-end">
+                                            <Grid item>
+                                                <DialogActions>
+                                                    <Button onClick={handleDialogClose}>Cancel</Button>
+                                                    <Button type="submit">Save</Button>
+                                                </DialogActions>
+                                            </Grid>
+                                        </Grid>
                                     </Grid>
-                                    <Grid item xs={6} md={6}>
-                                        <TextField
-                                            InputLabelProps={{
-                                                shrink: true,
-                                            }}
-                                            margin="dense"
-                                            id="time-close"
-                                            name="timeClose"
-                                            label="Time Close"
-                                            variant="filled"
-                                            type="time"
-                                            fullWidth
-                                            required
-                                            {...register("timeClose")}
+                                </form>
+                            </DialogContent>
+                        </Dialog>
+
+                        {selected && <PlaceInfoWindow restoDetails={selected} />}
+                    </GoogleMap>
+                </Grid>
+
+                <Grid item xs={2} className={classes.sidebar}>
+                    <Grid container>
+                        <Grid item xs={12} className={classes.sidebarTitle} align="center">
+                            <Typography gutterBottom variant="h5"><b>Resto Cebu</b></Typography>
+                        </Grid>
+                        <Grid container>
+                            <Grid item xs={12}>
+                                <Typography variant="subtitle1">Restaurants</Typography>
+                            </Grid>
+                            <Grid item xs={12} style={{ padding: "8px" }}>
+                                <Typography variant="subtitle1">Restaurant Types</Typography>
+                                <Grid item xs={12}>
+                                    <FormGroup>
+                                        <Divider />
+                                        <FormControlLabel
+                                            control={
+                                                <Checkbox checked={fineDining} onChange={handleFiltersChange} color="primary" name="fineDining" />
+                                            }
+                                            label="Fine Dining"
                                         />
-                                    </Grid>
-                                </Grid>
-                                <FormControl fullWidth margin="dense">
-                                    <InputLabel id="days-open-label" required>Days Open</InputLabel>
-                                    <Select
-                                        labelId="days-open-label"
-                                        id="days-open-select"
-                                        name="daysOpen"
-                                        placeholder="Select Days..."
-                                        label="Days Open"
-                                        defaultValue="Others"
-                                        required
-                                        {...register("daysOpen")}
-                                    >
-                                        <MenuItem value="Monday - Sunday">Monday - Sunday</MenuItem>
-                                        <MenuItem value="Monday - Friday">Monday - Friday</MenuItem>
-                                        <MenuItem value="Friday - Sunday">Friday - Sunday</MenuItem>
-                                        <MenuItem value="Saturday - Sunday">Saturday - Sunday</MenuItem>
-                                        <MenuItem value="Others">Others</MenuItem>
-                                    </Select>
-                                </FormControl>
-                                {daysOpenWatch === "Others" &&
-                                    <TextField
-                                        margin="dense"
-                                        id="other-days-open"
-                                        name="otherDaysOpen"
-                                        label="Please specify the days"
-                                        variant="filled"
-                                        type="text"
-                                        fullWidth
-                                        required
-                                        {...register("otherDaysOpen")}
-                                    />
-                                }
-                                <Grid container justifyContent="flex-end" alignItems="flex-end">
-                                    <Grid item>
-                                        <DialogActions>
-                                            <Button onClick={handleDialogClose}>Cancel</Button>
-                                            <Button type="submit">Save</Button>
-                                        </DialogActions>
-                                    </Grid>
+                                        <Divider />
+                                        <FormControlLabel
+                                            control={
+                                                <Checkbox checked={casualDining} onChange={handleFiltersChange} color="primary" name="casualDining" />
+                                            }
+                                            label="Casual Dining"
+                                        />
+                                        <Divider />
+                                        <FormControlLabel
+                                            control={
+                                                <Checkbox checked={unliFood} onChange={handleFiltersChange} color="primary" name="unliFood" />
+                                            }
+                                            label="Unlimited Food"
+                                        />
+                                        <Divider />
+                                        <FormControlLabel
+                                            control={
+                                                <Checkbox checked={fastFood} onChange={handleFiltersChange} color="primary" name="fastFood" />
+                                            }
+                                            label="Fast Food"
+                                        />
+                                        <Divider />
+                                        <FormControlLabel
+                                            control={
+                                                <Checkbox checked={cafe} onChange={handleFiltersChange} color="primary" name="cafe" />
+                                            }
+                                            label="Cafe"
+                                        />
+                                        <Divider />
+                                        <FormControlLabel
+                                            control={
+                                                <Checkbox checked={others} onChange={handleFiltersChange} color="primary" name="others" />
+                                            }
+                                            label="Others"
+                                        />
+                                        <Divider />
+                                    </FormGroup>
+                                    <FormHelperText>Be careful</FormHelperText>
+                                    <Typography variant="subtitle1">Filters</Typography>
                                 </Grid>
                             </Grid>
-                        </form>
-                    </DialogContent>
-                </Dialog>
-
-                {selected && <PlaceInfoWindow restoDetails={selected} />}
-            </GoogleMap>
+                        </Grid>
+                    </Grid>
+                </Grid>
+            </Grid>
         </div>
     )
 }
