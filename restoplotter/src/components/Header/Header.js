@@ -15,7 +15,7 @@ const Header = () => {
                     Resto Cebu
                 </Typography>
                 <Box display="flex">
-                    <Typography variant="h6" classname={classes.title}>
+                    <Typography variant="h6" className={classes.title}>
                         Explore restaurants
                     </Typography>
                     {/* <Autocomplete> */}

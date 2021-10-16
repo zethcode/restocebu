@@ -13,4 +13,34 @@ export default makeStyles(() => ({
     pointer: {
         cursor: 'pointer',
     },
+    locateBtn: {
+        position: 'absolute',
+        top: '1rem',
+        right: '1rem',
+        border: 'none',
+        zIndex: '10',
+        backgroundColor: 'rgb(1, 1, 1, 0.7)',
+        "&:hover": {
+            backgroundColor: "rgb(1, 1, 1, 0.8)",
+        },
+    },
+    locateIcon: {
+        transform: 'scale(1.3)',
+        color: 'rgb(255, 255, 255, 1)',
+    },
+    drawBtn: {
+        position: 'absolute',
+        textTransform: 'none',
+        bottom: '2rem',
+        left: '1rem',
+        border: 'none',
+        zIndex: '10',
+        backgroundColor: 'rgb(222, 170, 29, 0.8)',
+        "&:hover": {
+            backgroundColor: "rgb(222, 170, 29, 1)",
+        },
+    },
+    snackbar: {
+        backgroundColor: 'rgb(219, 93, 61, 1)',
+    }
 }));

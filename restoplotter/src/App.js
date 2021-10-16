@@ -2,7 +2,7 @@ import './App.css';
 import { CssBaseline, Grid } from '@material-ui/core';
 import Header from './components/Header/Header';
 import List from './components/List/List';
-import Map from './components/Map/Map';
+import WrappedMap from './components/Map/Map';
 
 const App = () => {
   return (
@@ -14,7 +14,7 @@ const App = () => {
           <List />
         </Grid>
         <Grid item xs={12} md={10}>
-          <Map />
+          <WrappedMap />
         </Grid>
       </Grid>
     </>
