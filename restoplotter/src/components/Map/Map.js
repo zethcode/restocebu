@@ -109,7 +109,6 @@ const Map = () => {
                 return (textA < textB) ? -1 : (textA > textB) ? 1 : 0;
             });
 
-            console.log("asd", markers)
             setMarkersPlaceholder(sortedRestoData);
             setRestoMarkers(sortedRestoData);
         }
