@@ -77,7 +77,8 @@ export default makeStyles((theme) => ({
         paddingTop: '16px',
         paddingBottom: '16px',
         paddingLeft: '22px',
-        paddingRight: '22px'
+        paddingRight: '22px',
+        color: "white"
     },
     dialogContent: {
         backgroundColor: 'rgb(255, 255, 255, 0.9)',
@@ -148,9 +149,9 @@ export default makeStyles((theme) => ({
         paddingLeft: "10px",
         paddingRight: "10px",
         marginTop: "15px",
-        backgroundColor: "rgb(222, 170, 29, 0.9)",
+        backgroundColor: "rgb(221, 75, 62, 0.9)",
         "&:hover": {
-            backgroundColor: "rgb(221, 75, 62, 0.9)",
+            backgroundColor: "rgb(222, 170, 29, 0.9)",
         },
         color: "white",
     }

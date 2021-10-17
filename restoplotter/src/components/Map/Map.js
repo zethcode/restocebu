@@ -14,7 +14,6 @@ import useStyles from './styles';
 
 const libraries = ["drawing", "directions", "geometry"];
 const cebuCoordinates = { lat: 10.3157, lng: 123.8854 };
-const acaciaSteakhouse = { lat: 10.3232, lng: 123.8919 };
 
 // Commented: potential error handler
 // const handleLocationError = (browserHasGeolocation, infoWindow, pos) => {
@@ -156,6 +155,7 @@ const Map = () => {
         let filtersVal = false;
         let drawingVal = false;
         setDrawMode(false);
+        setDirectionsResult(null);
 
         if (listItem === "directions" && !listItemValue) {
             directionsVal = true;
@@ -168,7 +168,6 @@ const Map = () => {
             directionsVal = false;
             filtersVal = true;
             drawingVal = false;
-            setDirectionsResult(null);
             clearMapDrawing();
         }
 
@@ -176,7 +175,6 @@ const Map = () => {
             directionsVal = false;
             filtersVal = false;
             drawingVal = true;
-            setDirectionsResult(null);
         }
 
         setListToggleStatus({
@@ -267,6 +265,9 @@ const Map = () => {
                 lng: parseFloat(restoPosition.lng),
                 name: values.restoName,
                 type: values.restoType,
+                address: values.address,
+                description: values.description,
+                phone: values.phone,
                 specialtyFood: values.specialtyFood,
                 avgCustomer: values.avgCustomer,
                 timeOpen: values.timeOpen,
@@ -309,7 +310,6 @@ const Map = () => {
 
     // Save resto information on state handler
     const handleGetDirections = useCallback(async (values) => {
-        console.log("ang values", values)
         directionsService = new window.google.maps.DirectionsService();
         changeDirection(values.directionOrigin, values.directionDestination);
     }, [])
@@ -676,7 +676,7 @@ const Map = () => {
                         </Button>
 
                         <Dialog open={dialogOpen} onClose={handleDialogClose}>
-                            <DialogTitle>Add Restaurant</DialogTitle>
+                            <DialogTitle className={classes.dialogTitle}>Add Restaurant</DialogTitle>
                             <DialogContent>
                                 <DialogContentText>
                                     NOTE: No servers are currently set up for this app. The restaurant data will not be saved on your next visit.
@@ -714,6 +714,34 @@ const Map = () => {
                                                 <MenuItem value="Others">Others</MenuItem>
                                             </Select>
                                         </FormControl>
+                                        <Grid container spacing={2}>
+                                            <Grid item xs={6} md={6}>
+                                                <TextField
+                                                    margin="dense"
+                                                    id="resto-address"
+                                                    name="restoAddress"
+                                                    label="Address"
+                                                    placeholder="e.g. No. 1 Dr Jose P. Rizal St, Cebu City, Cebu"
+                                                    variant="filled"
+                                                    fullWidth
+                                                    required
+                                                    {...register("address")}
+                                                />
+                                            </Grid>
+                                            <Grid item xs={6} md={6}>
+                                                <TextField
+                                                    margin="dense"
+                                                    id="phone"
+                                                    name="phone"
+                                                    label="Phone"
+                                                    placeholder="e.g. (012) 345 6789"
+                                                    variant="filled"
+                                                    fullWidth
+                                                    required
+                                                    {...register("phone")}
+                                                />
+                                            </Grid>
+                                        </Grid>
                                         <TextField
                                             margin="dense"
                                             id="resto-description"
@@ -822,8 +850,8 @@ const Map = () => {
                                         <Grid container justifyContent="flex-end" alignItems="flex-end">
                                             <Grid item>
                                                 <DialogActions>
-                                                    <Button onClick={handleDialogClose}>Cancel</Button>
-                                                    <Button type="submit">Save</Button>
+                                                    <Button className={classes.closeBtn} onClick={handleDialogClose}>Cancel</Button>
+                                                    <Button className={classes.drawOnMapBtn} type="submit">Save</Button>
                                                 </DialogActions>
                                             </Grid>
                                         </Grid>
@@ -978,7 +1006,7 @@ const Map = () => {
                                     <ListItem>
                                         <Grid className={classes.sidebarItem} item xs={12}>
                                             <Grid item xs={12}>
-                                                <FormHelperText>You can draw circles and rectangles on the map. You can then click on the buttons below to show restaurants within the area of those shapes that you've drawn.</FormHelperText>
+                                                <FormHelperText>You can now draw circles and rectangles on the map using the overlay menu at the top.<br /><br />Click on the buttons below to show restaurant data located within the area of those shapes that you've created.<br /><br /></FormHelperText>
                                                 <Grid item xs={12}>
                                                     <Button className={classes.drawOnMapBtn} onClick={() => checkMarkersInBounds("circle")}>Check Circle</Button>
                                                 </Grid>
@@ -989,10 +1017,6 @@ const Map = () => {
                                         </Grid>
                                     </ListItem>
                                 </Grow>}
-                                <Divider light />
-                                <ListItem button>
-                                    <ListItemText primary="Spam" />
-                                </ListItem>
                                 <Divider />
                             </List>
                         </Grid>
