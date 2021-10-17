@@ -237,10 +237,6 @@ const Map = () => {
                     if (directions) {
                         setValue('directionOrigin', pos.lat + "," + pos.lng);
                     }
-                    // infoWindow.setPosition(pos);
-                    // infoWindow.setContent("Location found.");
-                    // infoWindow.open(map);
-                    // map.setCenter(pos);
                 },
                 () => {
                     //handleLocationError(true, infoWindow, map.getCenter());
@@ -270,6 +266,7 @@ const Map = () => {
                 phone: values.phone,
                 specialtyFood: values.specialtyFood,
                 avgCustomer: values.avgCustomer,
+                totalCustomerVisits: values.totalCustomerVisits,
                 timeOpen: values.timeOpen,
                 timeClose: values.timeClose,
                 daysOpen: values.otherDaysOpen ? values.otherDaysOpen : values.daysOpen,
@@ -339,14 +336,20 @@ const Map = () => {
                 <DialogContentText id="alert-dialog-slide-description">{restoDetails.description}</DialogContentText>
                 <br />
                 <Grid container spacing={1} align="center">
-                    <Grid item xs={4}>
+                    <Grid item xs={6}>
                         <Typography variant="subtitle2"><b>Food Specialty:</b> {restoDetails.specialtyFood}</Typography>
                     </Grid>
-                    <Grid item xs={4}>
+                    <Grid item xs={6}>
                         <Typography variant="subtitle2"><b>Phone:</b> {restoDetails.phone}</Typography>
                     </Grid>
-                    <Grid item xs={4}>
+                </Grid>
+                <br />
+                <Grid container spacing={1} align="center">
+                    <Grid item xs={6}>
                         <Typography variant="subtitle2"><b>Customers/Day:</b> {restoDetails.avgCustomer}</Typography>
+                    </Grid>
+                    <Grid item xs={6}>
+                        <Typography variant="subtitle2"><b>Total Customer Visits:</b> {restoDetails.totalCustomerVisits}</Typography>
                     </Grid>
                 </Grid>
                 <br />
@@ -753,8 +756,19 @@ const Map = () => {
                                             required
                                             {...register("description")}
                                         />
+                                        <TextField
+                                            margin="dense"
+                                            id="specialty-food"
+                                            name="specialtyFood"
+                                            label="Specialty Food"
+                                            placeholder="e.g. Steak"
+                                            variant="filled"
+                                            fullWidth
+                                            required
+                                            {...register("specialtyFood")}
+                                        />
                                         <Grid container spacing={2}>
-                                            <Grid item xs={6} md={6}>
+                                            <Grid item xs={6}>
                                                 <TextField
                                                     margin="dense"
                                                     id="customer-visits"
@@ -767,17 +781,17 @@ const Map = () => {
                                                     {...register("avgCustomer")}
                                                 />
                                             </Grid>
-                                            <Grid item xs={6} md={6}>
+                                            <Grid item xs={6}>
                                                 <TextField
                                                     margin="dense"
-                                                    id="specialty-food"
-                                                    name="specialtyFood"
-                                                    label="Specialty Food"
-                                                    placeholder="e.g. Steak"
+                                                    id="total-customer-visits"
+                                                    name="totalCustomerVisits"
+                                                    label="Total Customers Visited"
                                                     variant="filled"
+                                                    type="number"
                                                     fullWidth
                                                     required
-                                                    {...register("specialtyFood")}
+                                                    {...register("totalCustomerVisits")}
                                                 />
                                             </Grid>
                                         </Grid>
