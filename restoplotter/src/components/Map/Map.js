@@ -8,6 +8,7 @@ import AccessTimeIcon from '@material-ui/icons/AccessTime';
 import RateReviewIcon from '@material-ui/icons/RateReview';
 import NavigationIcon from '@material-ui/icons/Navigation';
 import restoPin from './../../assets/restaurant_pin.png';
+import logo from './../../assets/rc_logo.png';
 import { getRestaurants } from './../../api/index';
 import { useForm } from 'react-hook-form';
 import useStyles from './styles';
@@ -870,7 +871,10 @@ const Map = () => {
                 <Grid item xs={2} className={classes.sidebar}>
                     <Grid container>
                         <Grid item xs={12} className={classes.sidebarTitle} align="center">
-                            <Typography gutterBottom variant="h5"><b>Resto Cebu</b></Typography>
+                            <Typography variant="h5">
+                                <img className={classes.rcLogo} src={logo} alt="resto-cebu-logo" />
+                                <b>Resto Cebu</b>
+                            </Typography>
                         </Grid>
                         <Grid item xs={12}>
                             <List component="nav" aria-label="mailbox folders">
