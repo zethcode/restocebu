@@ -1,0 +1,305 @@
+[
+    {
+        "id": "10.315628750939199123.88559764527679",
+        "lat": 10.315628750939199,
+        "lng": 123.88559764527679,
+        "name": "Zeth Steakhouse",
+        "type": "Casual Dining",
+        "address": "Green Valley Subdivision, Acacia St, Capitol, Cebu City, 6000",
+        "description": "Welcome to the Home of Cebu's favorite steaks. We are open for delivery, dine-in and takeout. A no frills steakhouse good for family and friends. If you prefer to stay safe in your homes, we deliver to Cebu City, Mandaue, Consolacion, Liloan, Mactan, Talisay & Minglanilla",
+        "phone": "(032) 254 9946",
+        "specialtyFood": "Steak",
+        "avgCustomer": 20,
+        "timeOpen": "10:00 AM",
+        "timeClose": "9:00 PM",
+        "daysOpen": "Monday - Sunday",
+        "dateCreated": "October 16, 2021 7:30 pm",
+        "reviews": [
+            {
+                "id": "review1",
+                "reviewerName": "Arckie Jadulco",
+                "comment": "Their steak is the most juicy, tender, and flavorful steak that I have every tried!",
+                "rating": 5,
+                "dateCreated": "October 11, 2021"
+            },
+            {
+                "id": "review2",
+                "reviewerName": "Anonymous",
+                "comment": "The menu has fewer options than when we  last visited. We were definitely excited for the pasta but it’s been phased out, for now. Other than that, steaks are the best. And ambience is perfect for friends and family.",
+                "rating": 5,
+                "dateCreated": "September 16, 2021"
+            },
+            {
+                "id": "review3",
+                "reviewerName": "Francel Ocampo",
+                "comment": "I'm no steak expert but so far this place might be good because it's a full house even at weekdays. We ordered ostrich pepper steak, Salisbury steak, and Acacia Patty Melt. All are so good especially the ostrich pepper steak. Will visit again on a daytime for another menu.",
+                "rating": 5,
+                "dateCreated": "September 12, 2021"
+            },
+            {
+                "id": "review4",
+                "reviewerName": "Louise Nino",
+                "comment": "Steak is not a cheap kind of food but I can't stop myself from going back to this resto. I always get their black pepper steak (pinakabarato) and mashed potato. I enjoy it with rice still. Hahaha. This is a great alfresco dining area. Perfect for dates both with family and your gf/bf. Downside: the transportation (it is good for those who have their own vehicle; if not possible, take a taxi or grab)",
+                "rating": 4,
+                "dateCreated": "August 28, 2021"
+            },
+            {
+                "id": "review5",
+                "reviewerName": "Tyler Montenegro",
+                "comment": "This place is really good for intimate gathering with family or loved ones. The entire ambiance of the place is nice and romantic. Their food is moderately expensive tho but worth the price.",
+                "rating": 4,
+                "dateCreated": "July 26, 2021"
+            },
+            {
+                "id": "review6",
+                "reviewerName": "Jace Joaquin",
+                "comment": "The steak is amazing!!!",
+                "rating": 3,
+                "dateCreated": "December 28, 2020"
+            }
+        ]
+    },
+    {
+        "id": "10.3091052218798123.89378234356502",
+        "lat": 10.3091052218798,
+        "lng": 123.89378234356502,
+        "name": "Cafe France",
+        "type": "Cafe",
+        "address": "Fuente Osmeña Cir, Cebu City, 6000 Cebu",
+        "description": "An elegant cafe situated at the center of Cebu. Dine with us to get cozy and productive. We provide free electric outlets for your devices to charge and a fast internet connection here!",
+        "phone": "(012) 123 4567",
+        "specialtyFood": "Coffee Beverages",
+        "avgCustomer": 56,
+        "timeOpen": "7:00 AM",
+        "timeClose": "11:00 PM",
+        "daysOpen": "Monday - Friday",
+        "dateCreated": "October 16, 2021 7:30 pm"
+    },
+    {
+        "id": "10.31111651332676123.90352561838202",
+        "lat": 10.31111651332676,
+        "lng": 123.90352561838202,
+        "name": "Jollibee Cebu Gorordo",
+        "type": "Fast Food",
+        "address": "Gorordo, cor General Maxilom Ave, Cebu City, Cebu",
+        "description": "Philippines-based chain known for its burgers, fried chicken, spaghetti & Filipino dishes.",
+        "phone": "(032) 232 4342",
+        "specialtyFood": "Chickenjoy",
+        "avgCustomer": 123,
+        "timeOpen": "10:00 AM",
+        "timeClose": "9:00 PM",
+        "daysOpen": "Monday - Sunday",
+        "dateCreated": "October 18, 2021 3:30 am",
+        "reviews": [
+            {
+                "id": "review1",
+                "reviewerName": "Luchz P",
+                "comment": "This place mostly is warm (high temperature ng AC). Haba ng pila if labasan ng school. Patience. Value for money - well Jobi have been increasing quite often the last few months.",
+                "rating": 4,
+                "dateCreated": "February 11, 2021"
+            },
+            {
+                "id": "review2",
+                "reviewerName": "Janice Macay",
+                "comment": "Eavesdropped food delivery services like Food Panda and Grab complaining outside due to slowness of service. One was even confronting the crew of the delay and the latter asked the former to cancel his order instead and transfer to other branch. Rude it is. The security guard intervene and asked the former to talk to the manager.",
+                "rating": 3,
+                "dateCreated": "October 16, 2020"
+            },
+            {
+                "id": "review3",
+                "reviewerName": "Francel Ocampo",
+                "comment": "I'm no steak expert but so far this place might be good because it's a full house even at weekdays. We ordered ostrich pepper steak, Salisbury steak, and Acacia Patty Melt. All are so good especially the ostrich pepper steak. Will visit again on a daytime for another menu.",
+                "rating": 5,
+                "dateCreated": "September 12, 2020"
+            }
+        ]
+    },
+    {
+        "id": "10.317472722796978123.89369365412931",
+        "lat": 10.317472722796978,
+        "lng": 123.89369365412931,
+        "name": "McDonald's Escario",
+        "type": "Fast Food",
+        "address": "N Escario St, Cebu City, 6000 Cebu",
+        "description": "Classic, long-running fast-food chain known for its burgers & fries.",
+        "phone": "(02) 86236",
+        "specialtyFood": "Burgers",
+        "avgCustomer": 93,
+        "timeOpen": "7:00 AM",
+        "timeClose": "10:00 PM",
+        "daysOpen": "Monday - Sunday",
+        "dateCreated": "October 18, 2021 3:30 am",
+        "reviews": [
+            {
+                "id": "review1",
+                "reviewerName": "Carlo Andrew Olano",
+                "comment": "It's a pretty good place to enjoy your McDonald's favorites like the newly-launched BTS meal.  The  branch has ample parking spaces and it is not hard to find a seat during lunch time.  They have adapted already to the new normal and it is a safe space to enjoy some burgers, fries, chicken,  and spaghetti for lunch.",
+                "rating": 5,
+                "dateCreated": "October 11, 2020"
+            },
+            {
+                "id": "review2",
+                "reviewerName": "Janice Macay",
+                "comment": "Not crowded and they have dine-in limited people only. And fast serving.",
+                "rating": 5,
+                "dateCreated": "September 16, 2020"
+            }
+        ]
+    },
+    {
+        "id": "10.29651787855765123.96579647997218",
+        "lat": 10.29651787855765,
+        "lng": 123.96579647997218,
+        "name": "Wingers Unlimited",
+        "type": "Unlimited Food",
+        "address": "6015 Basak-Marigondon Rd, Mactan Town Center (MTC, Lapu-Lapu City, Cebu",
+        "description": "Unlimited Wings & Rice. Dine with us!",
+        "phone": "(000) 123 4567",
+        "specialtyFood": "Chicken Wings",
+        "avgCustomer": 153,
+        "timeOpen": "10:00 AM",
+        "timeClose": "10:00 PM",
+        "daysOpen": "Monday - Sunday",
+        "dateCreated": "October 18, 2021 3:30 am",
+        "reviews": [
+            {
+                "id": "review1",
+                "reviewerName": "J-AR DIO LIN",
+                "comment": "Went here yesterday June6, 2021, good place and good food for fried chicken lover, it's worth a price for only 349 pesos per person. You will enjoy unlimited rice, fried chicken with different flavored sauce, drinks soda and juice, flavored fries. customer service is ok...",
+                "rating": 5,
+                "dateCreated": "October 11, 2021"
+            },
+            {
+                "id": "review2",
+                "reviewerName": "Hazel Demape",
+                "comment": "Great food.. great service.. happy dining",
+                "rating": 5,
+                "dateCreated": "February 24, 2021"
+            },
+            {
+                "id": "review3",
+                "reviewerName": "Wandercrick",
+                "comment": "Food - 8 | Cleanliness - 8 | Ambiance - 8 | Staff - 8 | COVID-19 Protocol - 8",
+                "rating": 4,
+                "dateCreated": "June 24, 2021"
+            }
+        ]
+    },
+    {
+        "id": "10.331295549562928123.89980619094034",
+        "lat": 10.331295549562928123,
+        "lng": 123.89980619094034,
+        "name": "Burrow",
+        "type": "Unlimited Food",
+        "address": "Unit 4, Tsai Hotel And Residences, Wilson St, Apas, Cebu City, 6000 Cebu",
+        "description": "Chicken wings restaurant with unlimited food offers.",
+        "phone": "(032) 328 1074",
+        "specialtyFood": "Chicken Wings",
+        "avgCustomer": 167,
+        "timeOpen": "10:00 AM",
+        "timeClose": "10:00 PM",
+        "daysOpen": "Monday - Sunday",
+        "dateCreated": "October 18, 2021 3:30 am",
+        "reviews": [
+            {
+                "id": "review1",
+                "reviewerName": "Judy Claire Sesante",
+                "comment": "My favorite always. ❤️",
+                "rating": 5,
+                "dateCreated": "October 11, 2021"
+            },
+            {
+                "id": "review2",
+                "reviewerName": "Gee Singson",
+                "comment": "Their chicken is not dry, very tasty. The nuggets = yummy. Fries was cooked right.",
+                "rating": 5,
+                "dateCreated": "February 24, 2021"
+            },
+            {
+                "id": "review3",
+                "reviewerName": "Grace Joy Seña",
+                "comment": "Out of all Unli wings in Cebu, Burrows tastes the best. Juicy and the staff are so kind.",
+                "rating": 5,
+                "dateCreated": "June 24, 2021"
+            },
+            {
+                "id": "review4",
+                "reviewerName": "Eva Mae Urboda",
+                "comment": "DELICIOUS and Consistent as ever. I love how open they are for changes and the hardwork really pays. Their service is better. Location wise and very accommodating people. A job well done. Keep it up management 😍",
+                "rating": 5,
+                "dateCreated": "August 28, 2021"
+            }
+        ]
+    },
+    {
+        "id": "10.326590918551387123.9004086331274",
+        "lat": 10.326590918551387,
+        "lng": 123.9004086331274,
+        "name": "Circa 1900",
+        "type": "Fine Dining",
+        "address": "Sanjercas Ville Ext Rd, Cebu City, 6000 Cebu",
+        "description": "Filipino & Cebuano homestyle classics with upscale ingredients, served in an airy, stylish room.",
+        "phone": "(032) 239 6265",
+        "specialtyFood": "Sous Vide Beef Tenderloin",
+        "avgCustomer": 173,
+        "timeOpen": "10:00 AM",
+        "timeClose": "9:00 PM",
+        "daysOpen": "Monday - Sunday",
+        "dateCreated": "October 18, 2021 3:30 am",
+        "reviews": [
+            {
+                "id": "review1",
+                "reviewerName": "Claire De la Cerna",
+                "comment": "Homey and cozy ambiance. Perfect for catch up with friends and parties since it has a big area for events as well.",
+                "rating": 4,
+                "dateCreated": "August 11, 2021"
+            },
+            {
+                "id": "review2",
+                "reviewerName": "J V",
+                "comment": "We enjoyed the food we ordered. The salad was fresh and well seasoned. I liked the sizzing seafood. One thing to point out was their choices of pasta  dishes. There were only few or there were just 2 pastas. All pork and  beef.",
+                "rating": 5,
+                "dateCreated": "October 6, 2021"
+            }
+        ]
+    },
+    {
+        "id": "10.311132714022394123.89403392113216",
+        "lat": 10.311132714022394,
+        "lng": 123.89403392113216,
+        "name": "Pungko-Pungko sa Fuente",
+        "type": "Others",
+        "address": "52-A J. Llorente St, Cebu City, 6000 Cebu",
+        "description": "Filipino & Cebuano homestyle classics with upscale ingredients, served in an airy, stylish room.",
+        "phone": "0916 896 4714",
+        "specialtyFood": "Ginabot",
+        "avgCustomer": 85,
+        "timeOpen": "9:00 AM",
+        "timeClose": "8:00 PM",
+        "daysOpen": "Monday - Sunday",
+        "dateCreated": "October 18, 2021 3:30 am",
+        "reviews": [
+            {
+                "id": "review1",
+                "reviewerName": "Christian Laureano (Ian)",
+                "comment": "One of our go-to places for a quick Ginabot fix. Place has a 'market' kind of feels as the sellers try and persuade you to buy at their stall.",
+                "rating": 4,
+                "dateCreated": "August 11, 2021"
+            },
+            {
+                "id": "review2",
+                "reviewerName": "Arjey Flordelis",
+                "comment": "Pungko² during pandemic is a different experience now. You have to order first from the front counter and bring your food to your table unlike the traditional experience where each table has a designated food server and the food is just within your reach. We were bringing our friends from Manila to let them experience this way of dining, but the setup turns out different which is totally understandable as a protocol. Overall, the food is superb as usual!",
+                "rating": 4,
+                "dateCreated": "August 6, 2021"
+            },
+            {
+                "id": "review2",
+                "reviewerName": "Zee Dee",
+                "comment": "It's a decent type of street food but the foods are not special. It's cheap and much more cleaner than eating along the streets. They only have lumpiang tawge and ginabot in their menu.",
+                "rating": 3,
+                "dateCreated": "February 6, 2021"
+            }
+        ]
+    }
+]
