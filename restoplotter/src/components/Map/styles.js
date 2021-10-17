@@ -1,6 +1,12 @@
 import { makeStyles } from '@material-ui/core/styles';
 
 export default makeStyles((theme) => ({
+    rcLogo: {
+        height: '35px',
+        width: '38px',
+        verticalAlign: 'middle',
+        marginRight: '12px',
+    },
     paper: {
         padding: '10px', display: 'flex', flexDirection: 'column', justifyContent: 'center', width: '100px',
     },
@@ -17,7 +23,10 @@ export default makeStyles((theme) => ({
     sidebarTitle: {
         backgroundColor: 'rgb(1, 1, 1, 0.9)',
         padding: '8px',
-        color: "#fff"
+        color: '#fff',
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'center'
     },
     checkbox: {
     },
