@@ -88,10 +88,10 @@ const Map = () => {
         casualDining: true,
         fastFood: true,
         cafe: true,
-        unliFood: true,
+        unlimitedFood: true,
         others: true,
     });
-    const { fineDining, casualDining, fastFood, cafe, unliFood, others } = restoTypeFilter;
+    const { fineDining, casualDining, fastFood, cafe, unlimitedFood, others } = restoTypeFilter;
     const daysOpenWatch = watch("daysOpen");
     const directionOriginWatch = watch("directionOrigin");
     const directionDestinationWatch = watch("directionDestination");
@@ -109,7 +109,7 @@ const Map = () => {
                 return (textA < textB) ? -1 : (textA > textB) ? 1 : 0;
             });
 
-
+            console.log("asd", markers)
             setMarkersPlaceholder(sortedRestoData);
             setRestoMarkers(sortedRestoData);
         }
@@ -377,7 +377,7 @@ const Map = () => {
                                 <Typography className={classes.reviewText}>{review.comment}</Typography>
                             </Grid>
                             <Grid item xs={12}>
-                                <Typography className={classes.reviewText}>
+                                <Typography className={classes.reviewText} style={{ color: "grey" }}>
                                     {review.dateCreated}
                                 </Typography>
                             </Grid>
@@ -551,7 +551,7 @@ const Map = () => {
                                 horizontal: "left"
                             }}
                             TransitionComponent={TransitionDown}
-                            message="Drawing mode is now enabled. You can pick an overlay type on the menu above."
+                            message="Drawing mode is now enabled. Pick an overlay above."
                             key={TransitionDown.name}
                         />
                         {drawing && <DrawingManager
@@ -591,7 +591,7 @@ const Map = () => {
                             onClick={() => clearMapDrawing()}
                         >
                             <Typography variant="subtitle1">
-                                Clear Map Drawing
+                                Clear Drawing
                             </Typography>
                         </Button>}
 
@@ -967,7 +967,7 @@ const Map = () => {
                                                     />
                                                     <FormControlLabel
                                                         control={
-                                                            <Checkbox checked={unliFood} onChange={handleFiltersChange} color="primary" name="unliFood" />
+                                                            <Checkbox checked={unlimitedFood} onChange={handleFiltersChange} color="primary" name="unlimitedFood" />
                                                         }
                                                         label="Unlimited Food"
                                                     />
