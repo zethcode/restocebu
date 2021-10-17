@@ -8,12 +8,12 @@ const App = () => {
   return (
     <>
       <CssBaseline />
-      <Header />
-      <Grid container spacing={3} style={{ width: '100%' }}>
-        <Grid item xs={12} md={4}>
+      {/* <Header /> */}
+      <Grid container style={{ width: '100%' }}>
+        {/* <Grid item xs={12} md={2}>
           <List />
-        </Grid>
-        <Grid item xs={12} md={8}>
+        </Grid> */}
+        <Grid item xs={12} md={12}>
           <Map />
         </Grid>
       </Grid>
