@@ -1,23 +1,23 @@
 {
   "files": {
     "main.css": "/restocebu/static/css/main.a0227011.chunk.css",
-    "main.js": "/restocebu/static/js/main.6ee35eda.chunk.js",
-    "main.js.map": "/restocebu/static/js/main.6ee35eda.chunk.js.map",
+    "main.js": "/restocebu/static/js/main.155b87f5.chunk.js",
+    "main.js.map": "/restocebu/static/js/main.155b87f5.chunk.js.map",
     "runtime-main.js": "/restocebu/static/js/runtime-main.f921daf3.js",
     "runtime-main.js.map": "/restocebu/static/js/runtime-main.f921daf3.js.map",
-    "static/js/2.5257a9dd.chunk.js": "/restocebu/static/js/2.5257a9dd.chunk.js",
-    "static/js/2.5257a9dd.chunk.js.map": "/restocebu/static/js/2.5257a9dd.chunk.js.map",
+    "static/js/2.44cc59ed.chunk.js": "/restocebu/static/js/2.44cc59ed.chunk.js",
+    "static/js/2.44cc59ed.chunk.js.map": "/restocebu/static/js/2.44cc59ed.chunk.js.map",
     "index.html": "/restocebu/index.html",
     "static/css/main.a0227011.chunk.css.map": "/restocebu/static/css/main.a0227011.chunk.css.map",
-    "static/js/2.5257a9dd.chunk.js.LICENSE.txt": "/restocebu/static/js/2.5257a9dd.chunk.js.LICENSE.txt",
+    "static/js/2.44cc59ed.chunk.js.LICENSE.txt": "/restocebu/static/js/2.44cc59ed.chunk.js.LICENSE.txt",
     "static/media/rc_logo.7709aab2.png": "/restocebu/static/media/rc_logo.7709aab2.png",
     "static/media/restaurant_pin.ae300e7d.png": "/restocebu/static/media/restaurant_pin.ae300e7d.png",
     "static/media/your_location_pin.40c72a0a.png": "/restocebu/static/media/your_location_pin.40c72a0a.png"
   },
   "entrypoints": [
     "static/js/runtime-main.f921daf3.js",
-    "static/js/2.5257a9dd.chunk.js",
+    "static/js/2.44cc59ed.chunk.js",
     "static/css/main.a0227011.chunk.css",
-    "static/js/main.6ee35eda.chunk.js"
+    "static/js/main.155b87f5.chunk.js"
   ]
 }
