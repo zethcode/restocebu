@@ -142,5 +142,16 @@ export default makeStyles((theme) => ({
             backgroundColor: "rgb(221, 75, 62, 0.9)",
         },
         color: 'white'
+    },
+    closeBtn: {
+        width: "20%",
+        paddingLeft: "10px",
+        paddingRight: "10px",
+        marginTop: "15px",
+        backgroundColor: "rgb(222, 170, 29, 0.9)",
+        "&:hover": {
+            backgroundColor: "rgb(221, 75, 62, 0.9)",
+        },
+        color: "white",
     }
 }));

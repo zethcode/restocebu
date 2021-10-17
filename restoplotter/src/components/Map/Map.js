@@ -76,6 +76,7 @@ const Map = () => {
     const { register, handleSubmit, reset, watch, setValue } = useForm({});
     const [dialogOpen, setDialogOpen] = useState(false);
     const [placeInfoOpen, setPlaceInfoOpen] = useState(false);
+    const [inBoundsMarkerInfoOpen, setInBoundsMarkerInfoOpen] = useState(false);
     const [directionsResult, setDirectionsResult] = useState(null);
     const [listToggleStatus, setListToggleStatus] = useState({
         directions: false,
@@ -199,6 +200,10 @@ const Map = () => {
         setPlaceInfoOpen(false);
     };
 
+    const handleInBoundsMarkerInfoClose = () => {
+        setInBoundsMarkerInfoOpen(false);
+    };
+
     const { isLoaded, loadError } = useLoadScript({
         googleMapsApiKey: process.env.REACT_APP_GOOGLE_MAPS_API_KEY,
         libraries
@@ -303,7 +308,8 @@ const Map = () => {
     }
 
     // Save resto information on state handler
-    const handleGetDirections = useCallback(async values => {
+    const handleGetDirections = useCallback(async (values) => {
+        console.log("ang values", values)
         directionsService = new window.google.maps.DirectionsService();
         changeDirection(values.directionOrigin, values.directionDestination);
     }, [])
@@ -388,8 +394,63 @@ const Map = () => {
                 <hr />
             </DialogContent>
             <DialogActions className={classes.dialogActions}>
-                <Button className={classes.dialogButtons} onClick={handlePlaceInfoClose}>Directions</Button>
-                <Button style={{ borderRadius: "30px" }} onClick={handlePlaceInfoClose}>Close</Button>
+                {/* <Button className={classes.dialogButtons} onClick={() => { handlePlaceInfoClose(); handleListItemChange("directions", false, restoDetails.lat + "," + restoDetails.lng); }}>Directions</Button> */}
+                <Button className={classes.closeBtn} onClick={handlePlaceInfoClose}>Close</Button>
+            </DialogActions>
+        </Dialog>
+    )
+
+    const MarkersInBoundsInfoWindow = ({ markersInBounds }) => (
+        <Dialog
+            open={inBoundsMarkerInfoOpen}
+            TransitionComponent={TransitionDown}
+            keepMounted
+            onClose={handleInBoundsMarkerInfoClose}
+            aria-describedby="alert-dialog-slide-description"
+            PaperProps={{
+                style: {
+                    backgroundColor: 'transparent',
+                    boxShadow: 'none',
+                },
+            }}
+        >
+            <div className={classes.dialogTitle}>
+                <Typography variant="h4" style={{ color: "white" }}>Restaurants Within the Area</Typography>
+                <Typography variant="subtitle1" style={{ color: "white" }}>Total: {markersInBounds.length}</Typography>
+            </div>
+            <DialogContent className={classes.dialogContent}>
+                <Grid container>
+                    {markersInBounds.length > 0 ? markersInBounds.map((resto) => (
+                        <Grid container key={resto.id} className={classes.review}>
+                            <Grid item xs={12}>
+                                <Divider />
+                                <Typography variant="subtitle1" style={{ marginTop: "10px" }}><b>{resto.name}</b> {resto.phone}</Typography>
+                            </Grid>
+                            <Grid item xs={12}>
+                                <Typography className={classes.reviewText}>{resto.address}</Typography>
+                            </Grid>
+                            <Grid item xs={12}>
+                                <br />
+                                <Typography className={classes.reviewText}>{resto.description}</Typography>
+                            </Grid>
+                            <Grid item xs={12}>
+                                <br />
+                                <Typography className={classes.reviewText}>
+                                    {resto.daysOpen} | {resto.timeOpen} - {resto.timeClose}
+                                </Typography>
+                            </Grid>
+                        </Grid>
+                    ))
+                        :
+                        <Grid item xs={12}>
+                            <Typography className={classes.reviewText}>No Restaurants Within the Area</Typography>
+                        </Grid>
+                    }
+                </Grid>
+                <hr />
+            </DialogContent>
+            <DialogActions className={classes.dialogActions}>
+                <Button className={classes.closeBtn} onClick={handleInBoundsMarkerInfoClose}>Close</Button>
             </DialogActions>
         </Dialog>
     )
@@ -462,7 +523,7 @@ const Map = () => {
             })
         }
 
-        console.log("inBoundMarkers", inBoundMarkers)
+        setInBoundsMarkerInfoOpen(true);
         setMarkersInBounds(inBoundMarkers)
     }
 
@@ -600,9 +661,8 @@ const Map = () => {
                         }
 
                         <Button
-                            className={!directions ? classes.drawBtn : classes.drawBtnDisabled}
+                            className={classes.drawBtn}
                             size="small"
-                            disabled={directions}
                             onClick={() => toggleDrawMode()}
                         >
                             {drawMode ?
@@ -773,6 +833,7 @@ const Map = () => {
                         </Dialog>
 
                         {selected && <PlaceInfoWindow restoDetails={selected} />}
+                        {markersInBounds && <MarkersInBoundsInfoWindow markersInBounds={markersInBounds} />}
                         {directions && directionsResult !== null && (
                             <DirectionsRenderer directions={directionsResult} />
                         )}
@@ -937,6 +998,7 @@ const Map = () => {
                         </Grid>
                     </Grid>
                 </Grid>
+
             </Grid>
         </div >
     )
