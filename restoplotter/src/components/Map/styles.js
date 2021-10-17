@@ -11,6 +11,9 @@ export default makeStyles((theme) => ({
         backgroundColor: 'whitesmoke',
         color: "black"
     },
+    sidebarItem: {
+        padding: "7px",
+    },
     sidebarTitle: {
         backgroundColor: 'rgb(1, 1, 1, 0.9)',
         padding: '8px',
@@ -51,7 +54,19 @@ export default makeStyles((theme) => ({
         backgroundColor: 'rgb(222, 170, 29, 0.8)',
         "&:hover": {
             backgroundColor: "rgb(222, 170, 29, 1)",
-        },
+        }
+    },
+    drawBtnDisabled: {
+        paddingLeft: "15px",
+        paddingRight: "15px",
+        position: 'absolute',
+        textTransform: 'none',
+        bottom: '2rem',
+        left: '1rem',
+        border: 'none',
+        zIndex: '10',
+        color: 'gray',
+        backgroundColor: 'rgb(222, 170, 29, 0.5)',
     },
     snackbar: {
         backgroundColor: 'rgb(219, 93, 61, 1)',
@@ -89,5 +104,15 @@ export default makeStyles((theme) => ({
     },
     reviewText: {
         fontSize: "13px"
+    },
+    directionGoBtn: {
+        paddingLeft: "10px",
+        paddingRight: "15px",
+        backgroundColor: "#4A89F3",
+        "&:hover": {
+            backgroundColor: "rgb(222, 170, 29, 0.9)",
+        },
+        color: "white",
+        borderRadius: "30px"
     }
 }));
