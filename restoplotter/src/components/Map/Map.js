@@ -12,7 +12,7 @@ import { getRestaurants } from './../../api/index';
 import { useForm } from 'react-hook-form';
 import useStyles from './styles';
 
-const libraries = ["drawing", "directions"];
+const libraries = ["drawing", "directions", "geometry"];
 const cebuCoordinates = { lat: 10.3157, lng: 123.8854 };
 const acaciaSteakhouse = { lat: 10.3232, lng: 123.8919 };
 
@@ -67,6 +67,7 @@ const Map = () => {
     const classes = useStyles();
     const [restoPosition, setRestoPosition] = useState({});
     const [restoMarkers, setRestoMarkers] = useState([]);
+    const [markersInBounds, setMarkersInBounds] = useState([]);
     const [markersPlaceholder, setMarkersPlaceholder] = useState([]);
     const [selected, setSelected] = useState(null);
     const [drawMode, setDrawMode] = useState(false);
@@ -95,8 +96,8 @@ const Map = () => {
     const directionOriginWatch = watch("directionOrigin");
     const directionDestinationWatch = watch("directionDestination");
 
-    const [rectangles, setRectangles] = useState([]);
-    const [circles, setCircles] = useState([]);
+    const [rectangle, setRectangle] = useState({});
+    const [circle, setCircle] = useState({});
 
     useEffect(() => {
         const fetchRestaurantData = async () => {
@@ -159,8 +160,7 @@ const Map = () => {
             directionsVal = true;
             filtersVal = false;
             drawingVal = false;
-            setRectangles([]);
-            setCircles([]);
+            clearMapDrawing();
         }
 
         if (listItem === "filters" && !listItemValue) {
@@ -168,8 +168,7 @@ const Map = () => {
             filtersVal = true;
             drawingVal = false;
             setDirectionsResult(null);
-            setRectangles([]);
-            setCircles([]);
+            clearMapDrawing();
         }
 
         if (listItem === "drawing" && !listItemValue) {
@@ -397,8 +396,7 @@ const Map = () => {
 
     const toggleDrawMode = () => {
         setDrawMode(!drawMode);
-        setRectangles([]);
-        setCircles([]);
+        clearMapDrawing();
         setListToggleStatus({
             ...listToggleStatus,
             directions: false,
@@ -406,6 +404,11 @@ const Map = () => {
             drawing: false
         });
         !drawMode && setSnackbarOpen(!snackbarOpen);
+    }
+
+    const clearMapDrawing = () => {
+        setRectangle({});
+        setCircle({});
     }
 
     const panToLocation = useCallback((lat, lng) => {
@@ -434,8 +437,33 @@ const Map = () => {
     if (loadError) return <h1>Error loading maps</h1>;
     if (!isLoaded) return <h1>Loading Maps</h1>;
 
-    const onLoad = drawingManager => {
-        console.log("drawing manager", drawingManager)
+    const checkMarkersInBounds = (shape) => {
+        let inBoundMarkers = [];
+
+        if (restoMarkers && Object.keys(circle).length !== 0 && shape === "circle") {
+            restoMarkers.forEach((resto) => {
+                var restaurantPosition = {
+                    lat: () => { return resto.lat },
+                    lng: () => { return resto.lng }
+                };
+
+                // let test = window.google.maps.geometry.spherical.computeDistanceBetween(circleCenter, restoPos);
+                let distanceFromMarkerToCenter = window.google.maps.geometry.spherical.computeDistanceBetween(circle.getCenter(), restaurantPosition);
+
+                if (distanceFromMarkerToCenter < circle.getRadius()) {
+                    inBoundMarkers.push(resto)
+                }
+            })
+        } else if (restoMarkers && Object.keys(rectangle).length !== 0 && shape === "rectangle") {
+            restoMarkers.forEach((resto) => {
+                if (rectangle.getBounds().contains({ lat: resto.lat, lng: resto.lng })) {
+                    inBoundMarkers.push(resto)
+                }
+            })
+        }
+
+        console.log("inBoundMarkers", inBoundMarkers)
+        setMarkersInBounds(inBoundMarkers)
     }
 
     return (
@@ -466,7 +494,6 @@ const Map = () => {
                             key={TransitionDown.name}
                         />
                         {drawing && <DrawingManager
-                            onLoad={onLoad}
                             options={{
                                 drawingControl: true,
                                 drawingControlOptions: {
@@ -485,22 +512,28 @@ const Map = () => {
                                 },
                             }}
                             onRectangleComplete={(rectangle => {
-                                setRectangles([...rectangles, rectangle]);
+                                setRectangle(rectangle);
                                 rectangle.setMap(null);
                             })}
                             onCircleComplete={(circle => {
-                                setCircles([...circles, circle]);
+                                setCircle(circle);
                                 circle.setMap(null);
                             })}
-                            onOverlayComplete={(event) => { console.log("event", event); }}
                             onUnmount={(drawingManager) => { }}
                         />}
-                        {rectangles && rectangles.map((rectangle, i) => (
-                            <Rectangle bounds={rectangle.getBounds()} key={i} />
-                        ))}
-                        {circles && circles.map((circle, i) => (
-                            <Circle center={circle.getCenter()} radius={circle.getRadius()} key={i} />
-                        ))}
+                        {Object.keys(rectangle).length !== 0 && <Rectangle bounds={rectangle.getBounds()} />}
+                        {Object.keys(circle).length !== 0 && <Circle center={circle.getCenter()} radius={circle.getRadius()} />}
+
+                        {drawing && <Button
+                            className={classes.clearDrawingBtn}
+                            size="small"
+                            onClick={() => clearMapDrawing()}
+                        >
+                            <Typography variant="subtitle1">
+                                Clear Map Drawing
+                            </Typography>
+                        </Button>}
+
                         <Snackbar
                             ContentProps={{
                                 classes: {
@@ -541,18 +574,6 @@ const Map = () => {
                                 </Marker>
                             </div>)
                         })}
-
-                        {/* {selected &&
-                    (<InfoWindow
-                        position={{ lat: selected.lat, lng: selected.lng }}
-                        onCloseClick={() => { setSelected(null) }}
-                    >
-                        <div>
-                            <h3>{selected.name}</h3>
-                            <p>Date Created: {selected.dateCreated}</p>
-                            <p>Update - Delete</p>
-                        </div>
-                    </InfoWindow>)} */}
 
                         {currentLocation &&
                             <Marker
@@ -766,7 +787,7 @@ const Map = () => {
                         <Grid item xs={12}>
                             <List component="nav" aria-label="mailbox folders">
                                 <ListItem button onClick={() => handleListItemChange("directions", directions)}>
-                                    <Typography variant="subtitle1">Restaurant Directions</Typography>
+                                    <Typography variant="subtitle1">Directions to Restaurant</Typography>
                                 </ListItem>
                                 {directions && <Grow
                                     in={directions}
@@ -833,7 +854,7 @@ const Map = () => {
                                 </Grow>}
                                 <Divider />
                                 <ListItem button onClick={() => handleListItemChange("filters", filters)}>
-                                    <Typography variant="subtitle1">Restaurant Types</Typography>
+                                    <Typography variant="subtitle1">Restaurant Type</Typography>
                                 </ListItem>
                                 {filters && <Grow
                                     in={filters}
@@ -896,45 +917,13 @@ const Map = () => {
                                     <ListItem>
                                         <Grid className={classes.sidebarItem} item xs={12}>
                                             <Grid item xs={12}>
-                                                <FormGroup>
-                                                    <FormControlLabel
-                                                        control={
-                                                            <Checkbox checked={fineDining} onChange={handleFiltersChange} color="primary" name="fineDining" />
-                                                        }
-                                                        label="Fine Dining"
-                                                    />
-                                                    <FormControlLabel
-                                                        control={
-                                                            <Checkbox checked={casualDining} onChange={handleFiltersChange} color="primary" name="casualDining" />
-                                                        }
-                                                        label="Casual Dining"
-                                                    />
-                                                    <FormControlLabel
-                                                        control={
-                                                            <Checkbox checked={unliFood} onChange={handleFiltersChange} color="primary" name="unliFood" />
-                                                        }
-                                                        label="Unlimited Food"
-                                                    />
-                                                    <FormControlLabel
-                                                        control={
-                                                            <Checkbox checked={fastFood} onChange={handleFiltersChange} color="primary" name="fastFood" />
-                                                        }
-                                                        label="Fast Food"
-                                                    />
-                                                    <FormControlLabel
-                                                        control={
-                                                            <Checkbox checked={cafe} onChange={handleFiltersChange} color="primary" name="cafe" />
-                                                        }
-                                                        label="Cafe"
-                                                    />
-                                                    <FormControlLabel
-                                                        control={
-                                                            <Checkbox checked={others} onChange={handleFiltersChange} color="primary" name="others" />
-                                                        }
-                                                        label="Others"
-                                                    />
-                                                </FormGroup>
-                                                <FormHelperText>Filters will reflect on the map</FormHelperText>
+                                                <FormHelperText>You can draw circles and rectangles on the map. You can then click on the buttons below to show restaurants within the area of those shapes that you've drawn.</FormHelperText>
+                                                <Grid item xs={12}>
+                                                    <Button className={classes.drawOnMapBtn} onClick={() => checkMarkersInBounds("circle")}>Check Circle</Button>
+                                                </Grid>
+                                                <Grid item xs={12}>
+                                                    <Button className={classes.drawOnMapBtn} onClick={() => checkMarkersInBounds("rectangle")}>Check Rectangle</Button>
+                                                </Grid>
                                             </Grid>
                                         </Grid>
                                     </ListItem>

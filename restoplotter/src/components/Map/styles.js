@@ -54,7 +54,8 @@ export default makeStyles((theme) => ({
         backgroundColor: 'rgb(222, 170, 29, 0.8)',
         "&:hover": {
             backgroundColor: "rgb(222, 170, 29, 1)",
-        }
+        },
+        color: 'white'
     },
     drawBtnDisabled: {
         paddingLeft: "15px",
@@ -114,5 +115,32 @@ export default makeStyles((theme) => ({
         },
         color: "white",
         borderRadius: "30px"
+    },
+    drawOnMapBtn: {
+        width: "100%",
+        paddingLeft: "10px",
+        paddingRight: "10px",
+        marginTop: "15px",
+        backgroundColor: "#4A89F3",
+        "&:hover": {
+            backgroundColor: "rgb(222, 170, 29, 0.9)",
+        },
+        color: "white",
+    },
+    clearDrawingBtn: {
+        fontSize: '10px',
+        paddingLeft: '15px',
+        paddingRight: '15px',
+        position: 'absolute',
+        textTransform: 'none',
+        bottom: '2rem',
+        right: '5rem',
+        border: 'none',
+        zIndex: '10',
+        backgroundColor: 'rgb(221, 75, 62, 0.7)',
+        "&:hover": {
+            backgroundColor: "rgb(221, 75, 62, 0.9)",
+        },
+        color: 'white'
     }
 }));
